@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +19,8 @@ public class ProductDto {
     private String image;
     private Double price;
     private Double originalPrice;
-    private Integer count;
+    private String country;
+    private List<Integer> size;
     private LocalDateTime createdAt;
 }
 

@@ -1,27 +1,26 @@
-package mt.megatrend.model;
+package mt.megatrend.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    @Id
+public class ProductInputDto {
     private String id;
     private String name;
     private String description;
-    @CreatedDate
-    @CreationTimestamp
+    private MultipartFile image;
+    private Double price;
+    private Double originalPrice;
+    private String country;
+    private List<Integer> size;
     private LocalDateTime createdAt;
 }

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import lombok.RequiredArgsConstructor;
 import mt.megatrend.dto.ProductDto;
+import mt.megatrend.dto.ProductInputDto;
 import mt.megatrend.dto.ResponseDto;
 import mt.megatrend.service.impl.ProductServiceImpl;
 import org.springframework.http.MediaType;
@@ -24,8 +25,8 @@ public class ProductResources {
             summary = "add"
     )
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseDto<ProductDto> add(@ModelAttribute ProductDto productDto){
-        return productService.add(productDto);
+    public ResponseDto<ProductDto> add(@ModelAttribute ProductInputDto productInputDto){
+        return productService.add(productInputDto);
     }
 
     @Operation(
@@ -59,8 +60,8 @@ public class ProductResources {
             summary = "Update"
     )
     @PatchMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseDto<ProductDto> update(@ModelAttribute ProductDto productDto){
-        return productService.update(productDto);
+    public ResponseDto<ProductDto> update(@ModelAttribute ProductInputDto productInputDto){
+        return productService.update(productInputDto);
     }
 
     @Operation(
@@ -73,16 +74,5 @@ public class ProductResources {
     @DeleteMapping("/{id}")
     public ResponseDto<ProductDto> delete(@PathVariable String id){
         return productService.delete(id);
-    }
-    @Operation(
-            method = "Get all products by category id",
-            description = "This endpoint return all products by category id",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Product info",
-                    content = @Content(mediaType = "application/json")),
-            summary = "Get by category id"
-    )
-    @GetMapping("/by-category/{id}")
-    public ResponseDto<List<ProductDto>> byCategoryId(@PathVariable String id){
-        return productService.getByCategoryId(id);
     }
 }
