@@ -1,5 +1,7 @@
 package mt.megatrend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import lombok.RequiredArgsConstructor;
 import mt.megatrend.dto.BalanceHistoryDto;
 import mt.megatrend.dto.ResponseDto;
@@ -13,15 +15,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BalanceHistoryResources {
     private final BalanceHistoryService balanceHistoryService;
+
+    @Operation(
+            method = "Add new BalanceHistory",
+            description = "Need to send BalanceHistoryDto to this endpoint to create new BalanceHistory",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "BalanceHistory info",
+                    content = @Content(mediaType = "application/json")),
+            summary = "add"
+    )
     @PostMapping
     public ResponseDto<BalanceHistoryDto> add(@RequestBody BalanceHistoryDto balanceHistoryDto){
         return balanceHistoryService.add(balanceHistoryDto);
     }
+
+    @Operation(
+            method = "Get all BalanceHistory",
+            description = "This endpoint return all BalanceHistory",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "BalanceHistory info",
+                    content = @Content(mediaType = "application/json")),
+            summary = "Get all"
+    )
     @GetMapping
     public ResponseDto<List<BalanceHistoryDto>> getAll(){
         return balanceHistoryService.getAll();
     }
 
+    @Operation(
+            method = "Update balance history",
+            description = "Need to send BalanceHistoryDto to this endpoint to update BalanceHistory",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "BalanceHistory info",
+                    content = @Content(mediaType = "application/json")),
+            summary = "Update"
+    )
     @PatchMapping
     public ResponseDto<BalanceHistoryDto> update(@RequestBody BalanceHistoryDto balanceHistoryDto){
         return balanceHistoryService.update(balanceHistoryDto);
