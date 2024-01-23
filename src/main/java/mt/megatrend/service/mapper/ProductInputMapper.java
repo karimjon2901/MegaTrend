@@ -4,9 +4,11 @@ import mt.megatrend.config.S3File;
 import mt.megatrend.dto.ProductDto;
 import mt.megatrend.dto.ProductInputDto;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
 public class ProductInputMapper{
+    @Autowired
     protected S3File s3File;
 
     public ProductDto toDto(ProductInputDto productInputDto) {

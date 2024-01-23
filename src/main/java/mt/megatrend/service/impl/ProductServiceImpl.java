@@ -5,7 +5,9 @@ import mt.megatrend.config.S3File;
 import mt.megatrend.dto.ProductDto;
 import mt.megatrend.dto.ProductInputDto;
 import mt.megatrend.dto.ResponseDto;
+import mt.megatrend.model.Balance;
 import mt.megatrend.model.Product;
+import mt.megatrend.repository.BalanceRepository;
 import mt.megatrend.repository.ProductRepository;
 import mt.megatrend.service.IdGenerator;
 import mt.megatrend.service.ProductService;
@@ -26,13 +28,17 @@ public class ProductServiceImpl implements ProductService {
     private final IdGenerator idGenerator;
     private final ProductInputMapper productInputMapper;
     private final S3File s3File;
+    private final BalanceRepository balanceRepository;
 
     @Override
     public ResponseDto<ProductDto> add(ProductInputDto productInputDto) {
         try {
+            Balance balance = balanceRepository.findById(1).orElseGet(Balance::new);
+            balance.setPriceOfAllProducts(balance.getBalance() + productInputDto.getOriginalPrice() * productInputDto.getSize().size());
             productInputDto.setId(idGenerator.generate());
             ProductDto productDto = productInputMapper.toDto(productInputDto);
             productRepository.save(productMapper.toEntity(productDto));
+            balanceRepository.save(balance);
             return ResponseDto.<ProductDto>builder()
                     .message(OK)
                     .success(true)

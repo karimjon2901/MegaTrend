@@ -25,6 +25,7 @@ public abstract class ProductMapper implements CommonMapper<ProductDto, Product>
         productDto.setSize(toList(product.getSize()));
         productDto.setDescription(product.getDescription());
         productDto.setOriginalPrice(product.getOriginalPrice());
+        productDto.setCreatedAt(product.getCreatedAt());
 
         return productDto;
     }
