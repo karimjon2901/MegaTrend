@@ -61,7 +61,7 @@ public class BalanceHistoryResources {
             summary = "Between dates"
     )
     @GetMapping("/by-time")
-    public ResponseDto<List<BalanceHistoryDto>> getBalanceHistoryBetweenDates(int sYear, int sMonth, int sDay, int sHour, int sMinute, int eYear, int eMonth, int eDay, int eHour, int eMinute){
+    public ResponseDto<List<BalanceHistoryDto>> getBalanceHistoryBetweenDates(@RequestParam int sYear, int sMonth, int sDay, int sHour, int sMinute, int eYear, int eMonth, int eDay, int eHour, int eMinute){
         LocalDateTime startDate = LocalDateTime.of(sYear, sMonth, sDay, sHour, sMinute);
         LocalDateTime endDate = LocalDateTime.of(eYear, eMonth, eDay, eHour, eMinute, 59);
         return balanceHistoryService.getBalanceHistoryBetweenDates(startDate,endDate);
