@@ -8,6 +8,7 @@ import mt.megatrend.dto.ResponseDto;
 import mt.megatrend.service.BalanceHistoryService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -50,5 +51,19 @@ public class BalanceHistoryResources {
     @PatchMapping
     public ResponseDto<BalanceHistoryDto> update(@RequestBody BalanceHistoryDto balanceHistoryDto){
         return balanceHistoryService.update(balanceHistoryDto);
+    }
+
+    @Operation(
+            method = "Get all BalanceHistory between dates",
+            description = "This endpoint return all BalanceHistory by between dates.  Need to send start year, month, day, hour, minute and end year, month, day, hour, minute to this endpoint",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "BalanceHistory info",
+                    content = @Content(mediaType = "application/json")),
+            summary = "Between dates"
+    )
+    @GetMapping("/by-time")
+    public ResponseDto<List<BalanceHistoryDto>> getBalanceHistoryBetweenDates(int sYear, int sMonth, int sDay, int sHour, int sMinute, int eYear, int eMonth, int eDay, int eHour, int eMinute){
+        LocalDateTime startDate = LocalDateTime.of(sYear, sMonth, sDay, sHour, sMinute);
+        LocalDateTime endDate = LocalDateTime.of(eYear, eMonth, eDay, eHour, eMinute, 59);
+        return balanceHistoryService.getBalanceHistoryBetweenDates(startDate,endDate);
     }
 }

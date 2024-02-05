@@ -99,4 +99,12 @@ public class BalanceHistoryServiceImpl implements BalanceHistoryService {
                     .build();
         }
     }
+    @Override
+    public ResponseDto<List<BalanceHistoryDto>> getBalanceHistoryBetweenDates(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return ResponseDto.<List<BalanceHistoryDto>>builder()
+                .message(OK)
+                .success(true)
+                .data(balanceHistoryRepository.findByTimeBetween(startDateTime, endDateTime).stream().map(balanceHistoryMapper::toDto).toList())
+                .build();
+    }
 }
